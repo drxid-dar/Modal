@@ -722,22 +722,24 @@ local Window = function(Settings: Configuration)
 		}
 	}
 	
-	local OpenButton = Scope:New "TextButton" {
-		AutoButtonColor = false,
-		AnchorPoint = Vector2.new(0.5, 0),
-		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-		AutomaticSize = Enum.AutomaticSize.X,
-		ZIndex = 100,
-		Size = UDim2.new(0, 40, 0, 40),
-		Parent = Storage.ScreenGuis.Window,
-		Position = Animate(function(Use)
-			local Shown = Use(Closed);
-			return UDim2.new(0.5, 0, 0, (Shown and 20) or -50)
-		end, 20, 1),
-
-		[OnEvent "MouseButton1Click"] = function()
-			Closed:set(false);
-		end,
+	local OpenButton = Scope:New "ImageButton" {
+    AutoButtonColor = false,
+    Size = UDim2.new(0, 40, 0, 40),
+    Image = "rbxassetid://YOUR_ICON_ID",
+    BackgroundTransparency = 0,
+    Position = Animate(function(Use)
+        local Shown = Use(Closed)
+        return UDim2.new(0.5, 0, 0, (Shown and 20) or -50)
+    end, 20, 1),
+    [OnEvent "MouseButton1Click"] = function()
+        Closed:set(false)
+    end,
+    [Children] = {
+        Scope:New "UIGradient" {
+            Name = "UIGradient",
+            Color = Colors.SetupTheme(Window.Themes.Background.Color),
+            Rotation = Window.Themes.Background.Rotation,
+        end,
 
 		[Children] = {
 			Scope:New "UIGradient" {
